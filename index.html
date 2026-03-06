@@ -3,140 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مُحكَّم | البوابة الرئيسية</title>
+    <title>منصة مُحكَّم | البوابة الموحدة</title>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0d2e25; --accent: #c5a059; --bg: #f8fafc; --white: #ffffff; }
+        :root { 
+            --primary: #1e293b;   
+            --accent: #c5a059;    
+            --najiz-green: #1b855e; 
+            --bg: #ffffff; 
+            --white: #ffffff; 
+            --border: #e2e8f0; 
+            --text-muted: #64748b;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Almarai', sans-serif; }
-        body { display: flex; height: 100vh; background-color: var(--bg); overflow: hidden; }
-
-        /* الجانب الأيمن (نموذج الدخول) */
-        .login-section { width: 45%; background: var(--white); display: flex; flex-direction: column; justify-content: center; padding: 0 8%; position: relative; z-index: 10; box-shadow: 20px 0 50px rgba(0,0,0,0.05); overflow-y: auto; }
         
-        .form-header { margin-bottom: 40px; text-align: center; }
-        .form-title { color: var(--primary); font-size: 32px; font-weight: 800; margin-bottom: 10px; }
-        .form-subtitle { color: #64748b; font-size: 15px; }
-
-        /* الحقول والقائمة المنسدلة */
-        .input-group { margin-bottom: 25px; }
-        .input-group label { display: block; font-size: 14px; font-weight: 700; color: #475569; margin-bottom: 10px; }
-        .input-group input, .input-group select { 
-            width: 100%; padding: 18px 20px; border: none; background: #f1f5f9; 
-            border-radius: 18px; font-size: 15px; outline: none; transition: 0.3s; color: #334155;
-        }
-        .input-group input:focus, .input-group select:focus { background: #e2e8f0; box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.1); }
-        
-        .input-group select {
-            appearance: none; cursor: pointer;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: left 20px center;
-            background-size: 18px;
+        body { 
+            background-color: var(--bg); 
+            color: var(--primary); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            min-height: 100vh;
         }
 
-        .btn { width: 100%; padding: 18px; border-radius: 20px; border: none; font-weight: 800; font-size: 16px; cursor: pointer; transition: 0.3s; margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 10px; }
-        .btn-main { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(13, 46, 37, 0.2); }
-        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(13, 46, 37, 0.3); }
+        /* --- الشريط العلوي (الهيدر) --- */
+        .top-nav {
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: var(--white);
+        }
+        .top-nav a { text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 700; transition: 0.2s; }
+        .top-nav a:hover { color: var(--primary); }
+        .nav-links { display: flex; gap: 30px; }
 
-        .divider { display: flex; align-items: center; text-align: center; margin: 25px 0; color: #94a3b8; font-size: 13px; }
-        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #e2e8f0; }
-        .divider:not(:empty)::before { margin-left: 15px; }
-        .divider:not(:empty)::after { margin-right: 15px; }
-
-        /* الجانب الأيسر (الهوية البصرية) */
-        .brand-section { width: 55%; background: linear-gradient(135deg, #0d2e25 0%, #0a221b 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 50px; position: relative; overflow: hidden; }
-        .pattern-overlay { position: absolute; top: -20%; right: -20%; width: 150%; height: 150%; background-image: radial-gradient(var(--accent) 1px, transparent 1px); background-size: 40px 40px; opacity: 0.05; transform: rotate(15deg); }
-
-        .brand-content { position: relative; z-index: 10; text-align: center; color: white; max-width: 600px; display: flex; flex-direction: column; align-items: center; }
+        /* --- منطقة الشعار والعنوان --- */
+        .header-section {
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
         
-        /* شعار عملاق جداً، بدون مربع أبيض، مع ظل فخم */
-        .brand-logo { 
-            width: 450px; 
+        .main-logo {
+            width: 550px; /* تم التكبير بشكل ملحوظ لفرض الهيبة */
             max-width: 90%;
-            height: auto; 
+            margin-bottom: 20px;
             display: block;
-            margin-bottom: 40px;
-            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.5)); 
-            transition: transform 0.5s ease;
-        }
-        .brand-logo:hover {
-            transform: scale(1.02); 
+            margin-left: auto;
+            margin-right: auto;
+            /* لمسة سحرية: ظل خفيف جداً يبرز الشعار الشفاف عن الخلفية البيضاء */
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.04));
         }
         
-        .brand-content h2 { font-size: 42px; font-weight: 800; color: var(--accent); margin-bottom: 20px; line-height: 1.4; text-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .brand-content p { font-size: 19px; color: #cbd5e0; line-height: 1.8; font-weight: 300; }
+        .header-section h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+        .header-section p {
+            font-size: 18px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* --- شبكة الكروت --- */
+        .portals-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            width: 95%;
+            margin-bottom: 40px;
+        }
+
+        .portal-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px 25px;
+            text-align: center;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.05); 
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 280px;
+            border: 1px solid var(--border);
+        }
+        
+        .portal-card:hover {
+            box-shadow: 0 20px 45px rgba(0,0,0,0.08);
+            transform: translateY(-5px);
+            border-color: #cbd5e1;
+        }
+
+        .portal-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #0f172a;
+        }
+
+        .portal-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .login-btn-card {
+            background: var(--najiz-green);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .portal-card:hover .login-btn-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- منطقة نموذج الدخول --- */
+        .login-wrapper {
+            width: 100%;
+            max-width: 450px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            display: none; 
+            margin-bottom: 50px;
+            border: 1px solid var(--border);
+        }
+        .login-wrapper h3 { text-align: center; color: var(--primary); margin-bottom: 25px; font-weight: 800;}
+        
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
+        .input-group input { 
+            width: 100%; padding: 15px; border: 1px solid var(--border); 
+            border-radius: 8px; font-size: 14px; outline: none; transition: 0.3s; background: #f8fafc;
+        }
+        .input-group input:focus { border-color: var(--najiz-green); background: var(--white); }
+
+        .btn-submit { background: var(--najiz-green); color: white; width: 100%; padding: 15px; border: none; border-radius: 8px; font-weight: 800; font-size: 15px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .btn-submit:hover { background: #146c4b; }
+
+        /* --- شريط الشركاء والاعتمادات --- */
+        .partners-section {
+            width: 100%;
+            padding: 60px 20px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            margin-top: auto; 
+            background: var(--white);
+        }
+        .partners-section h4 { font-size: 14px; color: var(--text-muted); margin-bottom: 30px; font-weight: 700; letter-spacing: 0.5px; }
+        .partners-logos { display: flex; justify-content: center; align-items: center; gap: 50px; flex-wrap: wrap; }
+        .partners-logos span { font-size: 19px; font-weight: 800; color: #cbd5e1; transition: 0.3s; cursor: default; }
+        .partners-logos span:hover { color: #94a3b8; }
+
+        /* --- التذييل الرسمي (الفوتر) --- */
+        footer {
+            width: 100%;
+            background: #f8fafc;
+            padding: 40px 5%;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .footer-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 20px; flex-wrap: wrap; }
+        .footer-links a { text-decoration: none; color: var(--text-muted); font-size: 13px; font-weight: 700; transition: 0.2s; }
+        .footer-links a:hover { color: var(--primary); }
+        .footer-legal { font-size: 12px; color: #94a3b8; margin-bottom: 15px; line-height: 1.6; font-weight: 400; }
+        .footer-copy { font-size: 13px; color: #cbd5e1; font-weight: 800; }
+
+        @media (max-width: 1024px) { .portals-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { 
+            .portals-grid { grid-template-columns: 1fr; } 
+            .nav-links { gap: 15px; } 
+            .partners-logos { gap: 20px; flex-direction: column; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="login-section">
-        
-        <div class="form-header">
-            <h2 class="form-title">بوابة الدخول الموحدة</h2>
-            <p class="form-subtitle">الرجاء إدخال بياناتك للمتابعة في منصة مُحكَّم</p>
+    <nav class="top-nav">
+        <div class="nav-links">
+            <a href="#">الرئيسية</a>
+            <a href="#">الأنظمة واللوائح</a>
+            <a href="#">حاسبة الرسوم</a>
+        </div>
+        <div>
+        </div>
+    </nav>
+    <div class="header-section">
+        <img src="logo.png" alt="شعار مُحكَّم" class="main-logo">
+        <p>المنصة الموحدة للتحكيم التجاري الإلكتروني</p>
+    </div>
+
+    <div class="portals-grid">
+        <div class="portal-card" onclick="showLogin('هيئة التحكيم', 'arbitrator')">
+            <div>
+                <div class="portal-title">هيئة التحكيم</div>
+                <div class="portal-desc">بوابة دخول أصحاب الفضيلة المحكمين، المرجحين، وأمناء السر.</div>
+            </div>
+            <button class="login-btn-card">تسجيل الدخول ←</button>
         </div>
 
-        <form onsubmit="handleLogin(event)">
-            
-            <div class="input-group">
-                <label>تحديد الصفة الإجرائية</label>
-                <select id="roleSelect" onchange="updateBtnText()">
-                    <option value="arbitrator">هيئة التحكيم</option>
-                    <option value="secretary">أمين السر</option>
-                    <option value="claimant">المحتكم (المدعي)</option>
-                    <option value="respondent">المحتكم ضده (المدعى عليه)</option>
-                </select>
+        <div class="portal-card" onclick="showLogin('أطراف النزاع والوكلاء', 'party')">
+            <div>
+                <div class="portal-title">أطراف النزاع والوكلاء</div>
+                <div class="portal-desc">بوابة دخول المحتكم، المحتكم ضده، والمحامين والوكلاء الشرعيين.</div>
             </div>
+            <button class="login-btn-card">تسجيل الدخول ←</button>
+        </div>
 
-            <div class="input-group">
-                <label>رقم الهوية / البريد الإلكتروني</label>
-                <input type="text" placeholder="أدخل بيانات الدخول" required>
+        <div class="portal-card" onclick="showLogin('الخبراء والمختصين', 'expert')">
+            <div>
+                <div class="portal-title">الخبراء والمختصين</div>
+                <div class="portal-desc">بوابة دخول المكاتب الهندسية، المحاسبية، والمترجمين المعتمدين.</div>
             </div>
-            
+            <button class="login-btn-card">تسجيل الدخول ←</button>
+        </div>
+
+        <div class="portal-card" onclick="showLogin('الأمانة العامة', 'admin')">
+            <div>
+                <div class="portal-title">الأمانة العامة</div>
+                <div class="portal-desc">بوابة مخصصة لموظفي المنصة ومديري النظام لإدارة العمليات.</div>
+            </div>
+            <button class="login-btn-card">تسجيل الدخول ←</button>
+        </div>
+    </div>
+
+    <div class="login-wrapper" id="loginForm">
+        <h3 id="formHeader">تسجيل الدخول</h3>
+        <form onsubmit="handleLogin(event)">
+            <div class="input-group">
+                <label>رقم الهوية / السجل التجاري</label>
+                <input type="text" placeholder="أدخل رقم الهوية أو السجل" required>
+            </div>
             <div class="input-group">
                 <label>كلمة المرور</label>
                 <input type="password" placeholder="••••••••" required>
             </div>
-
-            <button type="submit" class="btn btn-main" id="loginBtn">دخول بصفتك (هيئة التحكيم)</button>
+            <button type="submit" class="btn-submit">دخول للمنصة</button>
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="nafath.html" style="color: var(--najiz-green); font-size: 13px; font-weight: 700; text-decoration: none;">أو الدخول عبر النفاذ الوطني</a>
+            </div>
         </form>
-
-        <div class="divider">أو الدخول السريع المعتمَد</div>
-
-        <button type="button" class="btn" style="background: #0b8258; color: white;" onclick="window.location.href='nafath.html'">
-            <span style="font-size: 18px; font-weight: bold;">ن</span> النفاذ الوطني الموحد
-        </button>
     </div>
 
-    <div class="brand-section">
-        <div class="pattern-overlay"></div>
-        <div class="brand-content">
-            
-            <img src="logo.png" alt="شعار مُحكَّم" class="brand-logo">
-            
-            <h2>العدالة الرقمية<br>تبدأ من هنا.</h2>
-            <p>أول منصة تحكيم سعودية متكاملة تضمن لك السرية التامة، الكفاءة الإجرائية، والموثوقية القانونية.</p>
+    <div class="partners-section">
+        <h4>جهات الربط الرقمي والاعتماد</h4>
+        <div class="partners-logos">
+            <span>النفاذ الوطني الموحد</span>
+            <span>وزارة العدل | ناجز</span>
+            <span>المركز السعودي للتحكيم</span>
         </div>
     </div>
 
+    <footer>
+        <div class="footer-links">
+            <a href="#">سياسة الخصوصية</a>
+            <a href="#">شروط الاستخدام</a>
+            <a href="#">الأسئلة الشائعة</a>
+            <a href="#">الدعم الفني</a>
+        </div>
+        <div class="footer-legal">
+            تعمل منصة "مُحكَّم" وفق نظام التحكيم السعودي الصادر بالمرسوم الملكي رقم (م/34) وتعديلاته، واللوائح التنفيذية ذات العلاقة.
+        </div>
+        <div class="footer-copy">
+            جميع الحقوق محفوظة لمنصة مُحكَّم للتحكيم التجاري © 2026
+        </div>
+    </footer>
+
     <script>
-        // تغيير نص الزر ديناميكياً
-        function updateBtnText() {
-            const select = document.getElementById('roleSelect');
-            const selectedText = select.options[select.selectedIndex].text;
-            document.getElementById('loginBtn').innerText = "دخول بصفتك (" + selectedText + ")";
+        let selectedRole = '';
+
+        function showLogin(title, role) {
+            const form = document.getElementById('loginForm');
+            form.style.display = 'block';
+            document.getElementById('formHeader').innerText = 'تسجيل الدخول - ' + title;
+            selectedRole = role;
+            setTimeout(() => { form.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
         }
 
-        // التوجيه الذكي للمستخدمين بناءً على صفتهم
         function handleLogin(event) {
             event.preventDefault();
-            const role = document.getElementById('roleSelect').value;
-            
-            if(role === 'arbitrator' || role === 'secretary') {
-                // توجيه الهيئة وأمين السر إلى لوحة التحكم الرئيسية
+            if(selectedRole === 'arbitrator' || selectedRole === 'admin') {
                 window.location.href = 'dashboard.html';
+            } else if (selectedRole === 'party') {
+                window.location.href = 'party-portal.html';
             } else {
-                // توجيه الخصوم إلى بوابة الأطراف المبسطة
+                alert("بوابة الخبراء قيد الإطلاق. سيتم توجيهك لغرفة الأطراف للتجربة.");
                 window.location.href = 'party-portal.html';
             }
         }
