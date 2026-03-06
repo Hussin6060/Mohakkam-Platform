@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحرير محضر جلسة | منصة مُحكَّم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --primary: #1e293b;   
+            --accent: #c5a059;    
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --success: #1b855e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Naskh Arabic', serif; }
+        
+        body { background-color: var(--bg); color: var(--primary); padding-bottom: 80px; }
+
+        /* الهيدر العلوي للجلسة */
+        .session-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .live-indicator { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #fb7185; animation: blink 1.5s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+
+        /* كرت معلومات الجلسة */
+        .info-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .info-item label { display: block; font-size: 12px; color: #64748b; margin-bottom: 5px; }
+        .info-item span { font-weight: 700; font-size: 14px; }
+
+        /* سجل الحضور */
+        .attendance-section {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+        }
+        .attendance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .person-check { display: flex; align-items: center; gap: 10px; font-size: 13px; padding: 10px; border: 1px solid #f1f5f9; border-radius: 8px; }
+        .person-check input { accent-color: var(--success); }
+
+        /* منطقة التدوين الرئيسية */
+        .editor-section {
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .editor-toolbar { background: #f8fafc; padding: 10px 20px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 14px; }
+        .main-textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 30px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            line-height: 2;
+            resize: vertical;
+        }
+
+        /* القرارات */
+        .decisions-section {
+            margin-top: 25px;
+            background: #fffbeb;
+            border: 1px solid #fef3c7;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .decisions-section h4 { font-size: 15px; margin-bottom: 10px; color: #92400e; }
+        .decisions-input { width: 100%; background: transparent; border: 1px dashed #d97706; padding: 10px; border-radius: 6px; outline: none; font-size: 14px; }
+
+        /* الشريط السفلي للإجراءات */
+        .footer-actions {
+            position: fixed;
+            bottom: 0; width: 100%;
+            background: var(--white);
+            padding: 15px 5%;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn { padding: 12px 25px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; font-size: 14px; }
+        .btn-draft { background: #f1f5f9; color: var(--primary); }
+        .btn-finalize { background: var(--success); color: white; }
+    </style>
+</head>
+<body>
+
+    <header class="session-header">
+        <div>
+            <h3 style="font-size: 16px;">تحرير محضر جلسة (مباشر)</h3>
+        </div>
+        <div class="live-indicator">
+            <span>●</span> جاري تسجيل أحداث الجلسة...
+        </div>
+        <div>
+            <button class="btn btn-draft" style="padding: 5px 15px;">حفظ المسودة</button>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="info-card">
+            <div class="info-item">
+                <label>رقم القضية</label>
+                <span>٢٦-٠٠٤٥٧-A</span>
+            </div>
+            <div class="info-item">
+                <label>رقم الجلسة</label>
+                <span>الجلسة الثالثة (عبر الاتصال المرئي)</span>
+            </div>
+            <div class="info-item">
+                <label>تاريخ ووقت البدء</label>
+                <span>١٧ / ٠٨ / ١٤٤٧ هـ | ١٠:٠٠ صباحاً</span>
+            </div>
+        </div>
+
+        <div class="attendance-section">
+            <h4 style="font-size: 15px;">إثبات الحضور والغياب</h4>
+            <div class="attendance-grid">
+                <div class="person-check">
+                    <input type="checkbox" checked>
+                    <span>أحمد السليمان (رئيس الهيئة)</span>
+                </div>
+                <div class="person-check">
+                    <input type="checkbox" checked>
+                    <span>ممثل المحتكم (المدعي)</span>
+                </div>
+                <div class="person-check">
+                    <input type="checkbox">
+                    <span>ممثل المحتكم ضده (غائب)</span>
+                </div>
+                <div class="person-check">
+                    <input type="checkbox" checked>
+                    <span>فهد الراشد (أمين السر)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="editor-section">
+            <div class="editor-toolbar">نص وقائع الجلسة</div>
+            <textarea class="main-textarea" placeholder="ابدأ بتدوين ما يدور في الجلسة... مثال: افتتح رئيس الهيئة الجلسة بالترحيب، ثم طلب من المدعي عرض دفوعه الجديدة..."></textarea>
+        </div>
+
+        <div class="decisions-section">
+            <h4>ما قررته الهيئة في هذه الجلسة:</h4>
+            <textarea class="decisions-input" rows="3" placeholder="اكتب القرارات التي صدرت في نهاية الجلسة (مثلاً: تأجيل الجلسة لتقديم مستندات، أو حجز القضية للحكم)..."></textarea>
+        </div>
+
+    </div>
+
+    <div class="footer-actions">
+        <div style="font-size: 12px; color: var(--text-muted);">
+            آخر حفظ تلقائي: منذ دقيقة واحدة
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn btn-draft">معاينة المحضر</button>
+            <button class="btn btn-finalize" onclick="alert('سيتم الآن إرسال المحضر لجميع الحاضرين للتوقيع الرقمي عبر نفاذ.')">
+                اعتماد وتوقيع الحضور
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>
