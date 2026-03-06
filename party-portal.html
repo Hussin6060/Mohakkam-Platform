@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الأطراف | مُحكَّم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0d2e25; --accent: #c5a059; --bg: #f8fafc;
+            --white: #ffffff; --text: #334155; --shadow: 0 20px 50px rgba(0,0,0,0.04);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Almarai', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
+
+        /* القائمة الجانبية المخصصة للأطراف */
+        aside {
+            width: 280px; background: var(--white); border-left: 1px solid #f1f5f9;
+            position: fixed; height: 100vh; right: 0; padding: 40px 25px;
+            display: flex; flex-direction: column; z-index: 100;
+        }
+        .logo { text-align: center; margin-bottom: 50px; }
+        .logo img { width: 120px; border-radius: 15px; margin-bottom: 10px; }
+        .logo h2 { font-size: 20px; color: var(--primary); font-weight: 800; }
+        .party-badge { display: inline-block; background: #f1f5f9; color: var(--accent); padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: 800; margin-top: 10px; }
+        
+        .nav-item {
+            padding: 16px 20px; border-radius: 20px; margin-bottom: 12px; cursor: pointer;
+            display: flex; align-items: center; gap: 15px; font-size: 15px; color: #64748b; transition: 0.3s;
+        }
+        .nav-item:hover { background: #f8fafc; color: var(--primary); }
+        .nav-item.active { background: var(--primary); color: white; font-weight: 700; box-shadow: 0 10px 20px rgba(13, 46, 37, 0.15); }
+
+        /* المنطقة الرئيسية */
+        main { margin-right: 280px; flex-grow: 1; padding: 60px 80px; }
+        .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px; }
+        
+        /* البطاقات الإجرائية */
+        .action-card { background: var(--white); border-radius: 40px; padding: 45px; box-shadow: var(--shadow); margin-bottom: 35px; border-right: 8px solid var(--accent); position: relative; overflow: hidden; }
+        .case-id { background: #f8fafc; color: var(--primary); padding: 8px 18px; border-radius: 15px; font-weight: 800; font-family: monospace; font-size: 14px; margin-bottom: 20px; display: inline-block; border: 1px solid #e2e8f0; }
+        
+        .status-badge { position: absolute; left: 45px; top: 45px; background: #fef3c7; color: #b45309; padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 800; }
+        
+        /* منطقة رفع الملفات */
+        .upload-zone {
+            margin-top: 30px; border: 2px dashed #cbd5e0; border-radius: 30px; padding: 40px;
+            text-align: center; background: #f8fafc; cursor: pointer; transition: 0.3s;
+        }
+        .upload-zone:hover { border-color: var(--accent); background: #fffdf7; }
+        .upload-icon { font-size: 40px; color: var(--accent); margin-bottom: 15px; }
+        .upload-text { font-size: 15px; font-weight: 700; color: var(--primary); }
+        .upload-hint { font-size: 12px; color: #94a3b8; margin-top: 10px; }
+
+        .btn-submit {
+            background: var(--primary); color: white; border: none; padding: 16px 40px;
+            border-radius: 20px; font-weight: 800; cursor: pointer; transition: 0.3s;
+            margin-top: 20px; width: 100%; display: none; /* يظهر بعد اختيار الملف */
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(13, 46, 37, 0.2); }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+            <h2>شركة الأفق التجارية</h2>
+            <div class="party-badge">صفتك: المحتكم (المدعي)</div>
+        </div>
+        <div class="nav-item active">📁 قضاياي النشطة</div>
+        <div class="nav-item">💬 المراسلات والتبليغات</div>
+        <div class="nav-item">📅 مواعيد الجلسات</div>
+        <div class="nav-item" style="margin-top: auto; color: #ef4444;" onclick="window.location.href='index.html'">تسجيل الخروج ←</div>
+    </aside>
+
+    <main>
+        <div class="top-row">
+            <div>
+                <h1 style="font-size: 32px; font-weight: 800; color: var(--primary);">المهام والإجراءات المطلوبة</h1>
+                <p style="color: #64748b; margin-top: 10px;">إليك ملخص بالإجراءات النظامية بانتظار إيداعك.</p>
+            </div>
+        </div>
+
+        <div class="action-card">
+            <span class="status-badge">⏳ بانتظار إيداع مذكرتك</span>
+            <div class="case-id">القضية رقم: 2610000457</div>
+            <h2 style="font-size: 24px; font-weight: 800; color: var(--primary); margin-bottom: 10px;">أنت (المحتكم) ضد مؤسسة البناء الحديث</h2>
+            <p style="color: #64748b; font-size: 15px;">المرحلة الحالية: تبادل المذكرات والردود.</p>
+            
+            <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 30px 0;">
+            
+            <h3 style="font-size: 16px; color: var(--primary); font-weight: 800;">مطلوب منك: إيداع المذكرة التوضيحية</h3>
+            <p style="font-size: 13px; color: #94a3b8; margin-top: 5px;">الحد الأقصى للإيداع: 15 مارس 2026 (المتبقي 9 أيام)</p>
+
+            <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+                <div class="upload-icon">📄</div>
+                <div class="upload-text" id="uploadMsg">اضغط هنا لاختيار ملف المذكرة (PDF) أو قم بالسحب والإفلات</div>
+                <div class="upload-hint">الحد الأقصى لحجم الملف: 50 ميجابايت</div>
+                <input type="file" id="fileInput" accept=".pdf" style="display: none;" onchange="handleFileSelect(this)">
+            </div>
+
+            <button class="btn-submit" id="submitBtn" onclick="submitMemo()">إيداع المذكرة رسمياً في ملف القضية</button>
+        </div>
+
+        <div class="action-card" style="border-right-color: #cbd5e0; opacity: 0.7;">
+            <span class="status-badge" style="background: #e2e8f0; color: #475569;">✓ مكتمل</span>
+            <div class="case-id">القضية رقم: 2610000102</div>
+            <h2 style="font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 10px;">أنت (المحتكم ضده) ضد شركة الإمداد</h2>
+            <p style="color: #64748b; font-size: 14px;">تم إيداع حكم التحكيم النهائي. لا توجد إجراءات مطلوبة حالياً.</p>
+        </div>
+    </main>
+
+    <script>
+        // تفاعل منطقة رفع الملفات
+        function handleFileSelect(input) {
+            if (input.files && input.files[0]) {
+                const fileName = input.files[0].name;
+                document.getElementById('uploadMsg').innerHTML = `<span style="color: var(--primary);">تم إرفاق الملف:</span> <b style="color: var(--accent);">${fileName}</b>`;
+                document.getElementById('dropZone').style.borderColor = 'var(--accent)';
+                document.getElementById('dropZone').style.background = '#fffdf7';
+                // إظهار زر الإيداع الرسمي
+                document.getElementById('submitBtn').style.display = 'block';
+            }
+        }
+
+        // تفاعل زر الإيداع
+        function submitMemo() {
+            alert("تم إيداع مذكرتك بنجاح وتشفيرها في ملف القضية.\n\nسيتم الآن إشعار هيئة التحكيم والطرف الآخر آلياً.");
+            // إعادة ضبط الواجهة بعد الرفع
+            document.getElementById('uploadMsg').innerText = "تم الإيداع بنجاح ✓";
+            document.getElementById('submitBtn').style.display = 'none';
+            document.querySelector('.status-badge').innerText = "✓ بانتظار رد الطرف الآخر";
+            document.querySelector('.status-badge').style.background = '#dcfce7';
+            document.querySelector('.status-badge').style.color = '#166534';
+        }
+    </script>
+</body>
+</html>

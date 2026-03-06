@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>غرفة المداولة | مُحكَّم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #0d2e25; --accent: #c5a059; --bg: #f1f5f9; --white: #ffffff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Almarai', sans-serif; }
+        body { background: var(--bg); display: grid; grid-template-columns: 350px 1fr; height: 100vh; overflow: hidden; }
+
+        /*Side Panel*/
+        .side { background: var(--white); border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; }
+        .logo-small { padding: 30px; text-align: center; border-bottom: 1px solid #f1f5f9; }
+        .logo-small img { width: 100px; border-radius: 12px; }
+        
+        .chat-area { flex-grow: 1; padding: 25px; overflow-y: auto; background: #fafbfc; }
+        .msg { margin-bottom: 15px; padding: 15px; border-radius: 18px; font-size: 13px; line-height: 1.6; max-width: 90%; }
+        .msg.arb { background: var(--primary); color: white; border-bottom-right-radius: 0; }
+        .msg.party { background: #e2e8f0; color: #1e293b; border-bottom-left-radius: 0; }
+
+        /*Main*/
+        .stage { padding: 50px 70px; overflow-y: auto; }
+        .card { background: var(--white); padding: 40px; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.03); margin-bottom: 30px; }
+        .badge { background: var(--accent); color: white; padding: 6px 15px; border-radius: 10px; font-weight: 800; font-family: monospace; }
+        .doc-row { background: var(--white); padding: 20px 30px; border-radius: 25px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .doc-row:hover { transform: scale(1.01); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
+    </style>
+</head>
+<body>
+
+    <section class="side">
+        <div class="logo-small"><img src="logo.png" alt="Logo"></div>
+        <div style="padding: 20px 25px; font-weight: 800; color: var(--primary);">🗨️ المراسلات الإجرائية</div>
+        <div class="chat-area" id="box">
+            <div class="msg arb"><strong>رئيس الهيئة:</strong> تم استلام المذكرة الجوابية، وسيتم تحديد موعد الجلسة غداً.</div>
+            <div class="msg party"><strong>المدعي:</strong> نؤكد التزامنا بالجدول الزمني المعتمد.</div>
+        </div>
+        <div style="padding: 20px; border-top: 1px solid #f1f5f9;">
+            <input type="text" placeholder="اكتب هنا..." style="width:100%; padding:15px; border-radius:15px; border:1px solid #eee; outline:none;" onkeydown="if(event.key==='Enter') send()">
+        </div>
+    </section>
+
+    <main class="stage">
+        <div class="card">
+            <span class="badge">2610000457</span>
+            <h1 style="color:var(--primary); margin-top:15px; font-weight:800;">شركة الأفق ضد مؤسسة البناء</h1>
+            <p style="color:#64748b; margin-top:10px;">الحالة: <b>تبادل مذكرات</b> | آخر تحديث: اليوم</p>
+        </div>
+
+        <h3 style="margin-bottom:20px; font-weight:800; color:var(--primary);">📁 الملفات المودعة</h3>
+        <div class="doc-row">
+            <span>مذكرة تحرير الدعوى.pdf</span>
+            <a href="#" style="color:var(--accent); font-weight:800; text-decoration:none;">عرض المستند ←</a>
+        </div>
+        <div class="doc-row" style="border-right: 5px solid #ef4444;">
+            <span style="color:#ef4444; font-weight:800;">مطلوب: المذكرة الجوابية</span>
+            <span style="font-size:12px; color:#94a3b8;">المتبقي: 12 يوماً</span>
+        </div>
+    </main>
+
+    <script>
+        function send() {
+            const i = document.querySelector('input'); if(!i.value) return;
+            const d = document.createElement('div'); d.className = 'msg arb';
+            d.innerHTML = `<strong>أنت:</strong> ${i.value}`;
+            document.getElementById('box').appendChild(d); i.value = '';
+        }
+    </script>
+</body>
+</html>
