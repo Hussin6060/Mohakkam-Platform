@@ -3,70 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>غرفة المداولة | مُحكَّم</title>
+    <title>غرفة المداولة | منصة مُحكَّم</title>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0d2e25; --accent: #c5a059; --bg: #f1f5f9; --white: #ffffff; }
+        :root { 
+            --primary: #1e293b;   
+            --accent: #c5a059;    
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --text-muted: #64748b;
+            --najiz-green: #1b855e;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Almarai', sans-serif; }
-        body { background: var(--bg); display: grid; grid-template-columns: 350px 1fr; height: 100vh; overflow: hidden; }
-
-        /*Side Panel*/
-        .side { background: var(--white); border-left: 1px solid #e2e8f0; display: flex; flex-direction: column; }
-        .logo-small { padding: 30px; text-align: center; border-bottom: 1px solid #f1f5f9; }
-        .logo-small img { width: 100px; border-radius: 12px; }
         
-        .chat-area { flex-grow: 1; padding: 25px; overflow-y: auto; background: #fafbfc; }
-        .msg { margin-bottom: 15px; padding: 15px; border-radius: 18px; font-size: 13px; line-height: 1.6; max-width: 90%; }
-        .msg.arb { background: var(--primary); color: white; border-bottom-right-radius: 0; }
-        .msg.party { background: #e2e8f0; color: #1e293b; border-bottom-left-radius: 0; }
+        body { 
+            background-color: var(--bg); 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
 
-        /*Main*/
-        .stage { padding: 50px 70px; overflow-y: auto; }
-        .card { background: var(--white); padding: 40px; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.03); margin-bottom: 30px; }
-        .badge { background: var(--accent); color: white; padding: 6px 15px; border-radius: 10px; font-weight: 800; font-family: monospace; }
-        .doc-row { background: var(--white); padding: 20px 30px; border-radius: 25px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
-        .doc-row:hover { transform: scale(1.01); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
+        /* --- الهيدر العلوي الذكي --- */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-bottom: 2px solid var(--accent);
+            z-index: 100;
+        }
+        .case-title-area h2 { font-size: 18px; font-weight: 800; color: var(--accent); }
+        .case-title-area p { font-size: 12px; color: #cbd5e1; margin-top: 2px; }
+
+        .header-actions { display: flex; gap: 15px; align-items: center; }
+        .nav-link-header { color: white; text-decoration: none; font-size: 13px; font-weight: 700; opacity: 0.8; transition: 0.3s; }
+        .nav-link-header:hover { opacity: 1; color: var(--accent); }
+        
+        .btn-logout-header { 
+            background: #ef4444; 
+            color: white; 
+            border: none; 
+            padding: 8px 15px; 
+            border-radius: 8px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            font-size: 12px;
+        }
+
+        /* --- تخطيط الصفحة الرئيسي --- */
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 25px;
+            padding: 25px 5%;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        /* --- قسم ملفات القضية --- */
+        .panel {
+            background: var(--white);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            overflow: hidden;
+        }
+        .panel-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--border);
+            background: #fcfcfd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .panel-header h3 { font-size: 16px; font-weight: 800; color: var(--primary); }
+
+        .file-list { padding: 20px; overflow-y: auto; flex-grow: 1; }
+        .file-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+        .file-card:hover { border-color: var(--accent); background: #fffcf8; transform: translateX(-5px); }
+        .file-info { display: flex; align-items: center; gap: 15px; }
+        .file-icon { font-size: 24px; background: #f1f5f9; padding: 10px; border-radius: 10px; }
+        .file-details b { font-size: 14px; color: var(--primary); display: block; }
+        .file-details span { font-size: 11px; color: var(--text-muted); }
+
+        .btn-open { color: var(--accent); text-decoration: none; font-weight: 800; font-size: 13px; }
+
+        /* --- قسم المداولة السرية --- */
+        .chat-panel {
+            background: var(--white);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-history {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .message { max-width: 85%; padding: 12px 16px; border-radius: 18px; font-size: 13px; line-height: 1.6; position: relative; }
+        .message.received { background: var(--primary); color: white; align-self: flex-start; border-bottom-right-radius: 4px; }
+        .message.sent { background: #e2e8f0; color: var(--primary); align-self: flex-end; border-bottom-left-radius: 4px; }
+        .msg-author { font-size: 10px; font-weight: 800; margin-bottom: 5px; display: block; }
+
+        .chat-input {
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+        }
+        .chat-input input {
+            flex-grow: 1;
+            padding: 12px 18px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            outline: none;
+            font-size: 13px;
+        }
+        .btn-send { background: var(--primary); color: white; border: none; padding: 0 20px; border-radius: 12px; cursor: pointer; font-weight: 700; }
+
+        /* --- الشريط السفلي للإجراءات --- */
+        .bottom-actions {
+            background: var(--white);
+            padding: 15px 5%;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-award-final {
+            background: var(--accent);
+            color: var(--primary);
+            border: none;
+            padding: 14px 35px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-award-final:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3); }
+
     </style>
 </head>
 <body>
 
-    <section class="side">
-        <div class="logo-small"><img src="logo.png" alt="Logo"></div>
-        <div style="padding: 20px 25px; font-weight: 800; color: var(--primary);">🗨️ المراسلات الإجرائية</div>
-        <div class="chat-area" id="box">
-            <div class="msg arb"><strong>رئيس الهيئة:</strong> تم استلام المذكرة الجوابية، وسيتم تحديد موعد الجلسة غداً.</div>
-            <div class="msg party"><strong>المدعي:</strong> نؤكد التزامنا بالجدول الزمني المعتمد.</div>
+    <header>
+        <div class="case-title-area">
+            <h2>غرفة المداولة | قضية رقم 26-00457-ARB</h2>
+            <p>المحتكم: شركة الأفق التجارية | المحتكم ضده: مؤسسة البناء الحديث</p>
         </div>
-        <div style="padding: 20px; border-top: 1px solid #f1f5f9;">
-            <input type="text" placeholder="اكتب هنا..." style="width:100%; padding:15px; border-radius:15px; border:1px solid #eee; outline:none;" onkeydown="if(event.key==='Enter') send()">
+        <div class="header-actions">
+            <a href="dashboard.html" class="nav-link-header">العودة للوحة القيادة</a>
+            <button class="btn-logout-header" onclick="window.location.href='index.html'">تسجيل الخروج</button>
         </div>
-    </section>
+    </header>
 
-    <main class="stage">
-        <div class="card">
-            <span class="badge">2610000457</span>
-            <h1 style="color:var(--primary); margin-top:15px; font-weight:800;">شركة الأفق ضد مؤسسة البناء</h1>
-            <p style="color:#64748b; margin-top:10px;">الحالة: <b>تبادل مذكرات</b> | آخر تحديث: اليوم</p>
+    <div class="workspace">
+        
+        <div class="panel">
+            <div class="panel-header">
+                <h3>ملف الدعوى والمستندات</h3>
+                <span style="font-size: 12px; color: var(--text-muted);">تم التحديث: منذ ساعتين</span>
+            </div>
+            <div class="file-list">
+                <div class="file-card">
+                    <div class="file-info">
+                        <div class="file-icon">📄</div>
+                        <div class="file-details">
+                            <b>لائحة الدعوى التفصيلية.pdf</b>
+                            <span>حجم الملف: 2.4 MB | المودع: المدعي</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-open">معاينة الملف ←</a>
+                </div>
+
+                <div class="file-card">
+                    <div class="file-info">
+                        <div class="file-icon">📄</div>
+                        <div class="file-details">
+                            <b>المذكرة الجوابية والردود.pdf</b>
+                            <span>حجم الملف: 1.8 MB | المودع: المدعى عليه</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-open">معاينة الملف ←</a>
+                </div>
+
+                <div class="file-card">
+                    <div class="file-info">
+                        <div class="file-icon">📁</div>
+                        <div class="file-details">
+                            <b>مرفقات الأدلة والبراهين.zip</b>
+                            <span>حجم الملف: 15 MB | المودع: المدعي</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-open">فتح المجلد ←</a>
+                </div>
+            </div>
         </div>
 
-        <h3 style="margin-bottom:20px; font-weight:800; color:var(--primary);">📁 الملفات المودعة</h3>
-        <div class="doc-row">
-            <span>مذكرة تحرير الدعوى.pdf</span>
-            <a href="#" style="color:var(--accent); font-weight:800; text-decoration:none;">عرض المستند ←</a>
+        <div class="chat-panel">
+            <div class="panel-header">
+                <h3>مداولة أعضاء الهيئة</h3>
+            </div>
+            <div class="chat-history">
+                <div class="message received">
+                    <span class="msg-author">المستشار عبدالله (رئيس الهيئة)</span>
+                    <p>بعد مراجعة البند الرابع من العقد، أرى أن الحق مع المدعي في طلب التعويض. ما رأيكم؟</p>
+                </div>
+                <div class="message sent">
+                    <span class="msg-author">أمين السر</span>
+                    <p>تم تدوين الملاحظة، بانتظار مرئيات العضو الثالث لاكتمال المداولة.</p>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="اكتب رسالة سرية لأعضاء الهيئة...">
+                <button class="btn-send">ارسال</button>
+            </div>
         </div>
-        <div class="doc-row" style="border-right: 5px solid #ef4444;">
-            <span style="color:#ef4444; font-weight:800;">مطلوب: المذكرة الجوابية</span>
-            <span style="font-size:12px; color:#94a3b8;">المتبقي: 12 يوماً</span>
-        </div>
-    </main>
 
-    <script>
-        function send() {
-            const i = document.querySelector('input'); if(!i.value) return;
-            const d = document.createElement('div'); d.className = 'msg arb';
-            d.innerHTML = `<strong>أنت:</strong> ${i.value}`;
-            document.getElementById('box').appendChild(d); i.value = '';
-        }
-    </script>
+    </div>
+
+    <div class="bottom-actions">
+        <div style="color: var(--text-muted); font-size: 13px;">
+            <b>حالة المداولة:</b> مستمرة
+        </div>
+        <button class="btn-award-final" onclick="window.location.href='award.html'">
+            ⚖️ صياغة وإصدار الحكم النهائي
+        </button>
+    </div>
+
 </body>
 </html>
